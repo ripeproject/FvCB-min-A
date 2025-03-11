@@ -1,0 +1,17 @@
+doi_link	times_cited	year	citation	equations_paper	tpu_c_lim	comments	comments_tpu
+https://doi.org/10.1016/0168-1923(91)90002-8	1602	1991	Collatz et al. (1991)	min-A	none	Equation 2	Equation A7; described as capacity for export or utilization of the products of photosynthesis
+https://doi.org/10.1029/2003GB002199	1403	2005	Krinner et al. (2005)	original FvCB	NA	Equations A2 and A3
+https://doi.org/10.1175/1520-0442(1996)009%3C0676:ARLSPF%3E2.0.CO;2	1358	1996	Sellers et al. (1996)	min-A	none	Equation 17	Equation C5a; described as capacity for export or utilization of the products of photosynthesis
+--	1318	2000	von Caemmerer (2000)	min-A	none	Equation 2.27	Equation 2.26
+https://doi.org/10.1111/j.1365-3040.1995.tb00370.x	1127	1995	Leuning (1995)	min-A	NA	Equation 10	
+https://doi.org/10.1111/j.1365-3040.2007.01710.x	903	2007	Sharkey et al. (2007)	min-A	none	"Equations 1, 2 and 3 can be put into a spread sheet and Vcmax, J and TPU can be adjusted manually until each modelled line meets or exceeds all of the data points."	Equation 3
+https://doi.org/10.1029/96GB02692	901	1996	Foley et al. (1996)	min-A	none	Equation 1	Equation 5
+https://doi.org/10.1111/j.1365-3040.1991.tb01440.x	859	1991	Stitt (1991)	other	NA	Although it has sometimes been assumed or asserted that photosynthesis is controlled by single 'limiting' factors... this assertion is not easy to reconcile with the highly interactive and complex regulation of photosynthesis... nor with the experimental evidence that control is shared between several enzymes and redistributes in a very flexible manner in other pathways.	
+https://doi.org/10.1111/j.1365-3040.1997.00094.x	856	1997	de Pury & Farquhar (1997)	other	NA	Equations 2 and 4 are restricted to Cc > Gamma*	
+https://doi.org/10.1093/jxb/erg262	832	2003	Long & Bernacchi (2003)	original FvCB	none	Equation 6	Equation 9
+https://doi.org/10.1093/jxb/44.5.907	825	1993	Wullschleger (1993)	original FvCB	none	Equation 2	Equation 6
+https://doi.org/10.1111/j.1365-3040.1991.tb01439.x	823	1991	Long (1991)	original FvCB	NA	Equation 1	
+https://doi.org/10.1016/0034-4257(92)90102-P	712	1992	Sellers et al. (1992)	min-A	none	Equations 14a and 14b reduce to a simple minimum when theta = beta = 1	
+https://doi.org/10.1029/96GB02344	711	1996	Haxeltine & Prentice (1996)	min-A	NA	Equation 2 reduces to a simple minimum when theta = 1	
+https://doi.org/10.1104/pp.98.4.1429	686	1992	Harley et al. (1992)	original FvCB	NA	"Current models of C3 leaf photosynthesis assume that carboxylation of RuBP by Rubisco is limited by one of three factors... These are (a) the activity of Rubisco, (b) the regeneration of RuBP, or (c) the release of phosphate during the metabolism of triose phosphate to either starch or sucrose."	
+https://doi.org/10.1046/j.1365-3040.2002.00891.x	588	2002	Medlyn et al. (2002)	min-A	NA	Equation 1	
