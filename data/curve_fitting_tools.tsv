@@ -1,18 +1,19 @@
 doi_link	times_cited	year	citation	equations_paper	tpu_c_lim	tool_type	code_source	limiting_factor_determination	code_version	comments
 https://doi.org/10.1111/j.1365-3040.2007.01710.x	903	2007	Sharkey et al. (2007)	min-A	none	Excel spreadsheet	Supporting Information	manual	2007.1
-https://doi.org/10.1093/jxb/erg262	831	2003	Long & Bernacchi (2003)	original FvCB	none	Written procedure	--	manual	--
+https://doi.org/10.1093/jxb/erg262	831	2003	Long & Bernacchi (2003)	min-W	none	Written procedure	--	manual	--
 https://doi.org/10.1111/j.1365-3040.2004.01140.x	448	2004	Ethier & Livingston (2004)	min-A	NA	Written procedure	--	min-A	--
 https://doi.org/10.1371/journal.pone.0143346	248	2015	Duursma (2015)	min-A	NA	R package	https://github.com/RemkoDuursma/plantecophys	min-A+FRL+FTT	1.4-6	fitaci with fitmethod = 'default'
 https://doi.org/10.1371/journal.pone.0143346	248	2015	Duursma (2015)	min-A	NA	R package	https://github.com/RemkoDuursma/plantecophys	exhaustive	1.4-6	fitaci with fitmethod = 'bilinear'
 https://doi.org/10.1371/journal.pone.0143346	248	2015	Duursma (2015)	min-A	NA	R package	https://github.com/RemkoDuursma/plantecophys	manual	1.4-6	fitaci with fitmethod = 'onepoint'
-https://doi.org/10.1111/j.1365-3040.2010.02192.x	130	2010	Gu et al. (2010)	original FvCB	biochem	Web service	Not publically available	exhaustive	--	code is not publically available so we cannot be completely sure how it works
+https://doi.org/10.1111/j.1365-3040.2010.02192.x	130	2010	Gu et al. (2010)	min-W	biochem	Web service	Not publically available	exhaustive	--	code is not publically available so we cannot be completely sure how it works
 https://doi.org/10.1111/pce.12641	110	2015	Sharkey (2015)	--	NA	Excel spreadsheet	Supporting Information	manual	2
 https://doi.org/10.1111/j.1469-8137.2007.02182.x	104	2007	Dubois (2007)	min-A	none	SAS code	Supporting Information	min-A	--
 https://doi.org/10.1111/pce.12560	51	2015	Bellasio et al. (2015)	--	none	Excel spreadsheet	Supporting Information	manual	EFT33_2015.xlsx
-https://doi.org/10.1023/A:1006800909651	43	1997	Parsons et al. (1997)	original FvCB	none	Spreadsheet	https://web.archive.org/web/19970717042147/http://www.dundee.ac.uk/BioScience/photosyn.htm	original FvCB	--	"out-of-date compiled code does not run and cannot be examined, so we cannot be completely sure how it works"
+https://doi.org/10.1023/A:1006800909651	43	1997	Parsons et al. (1997)	min-W	none	Spreadsheet	https://web.archive.org/web/19970717042147/http://www.dundee.ac.uk/BioScience/photosyn.htm	min-W	--	"out-of-date compiled code does not run and cannot be examined, so we cannot be completely sure how it works"
 https://doi.org/10.1111/nph.14260	33	2016	Moualeu-Ngangue et al. (2016)	min-A	none	Excel spreadsheet	Supporting Information	min-A	Corrected version from 21 October 2016
 https://doi.org/10.1111/nph.14260	33	2016	Moualeu-Ngangue et al. (2016)	min-A	none	SAS code	Supporting Information	min-A	Corrected version from 21 October 2016	fits using min-A but displays using min-A+FRL
-https://doi.org/10.1111/pce.14153	7	2021	Gregory et al. (2021)	--	NA	R package	https://github.com/poales/msuRACiFit	original FvCB+FTT	1.2.0
+https://doi.org/10.1111/pce.14153	7	2021	Gregory et al. (2021)	--	NA	R package	https://github.com/poales/msuRACiFit	min-W+FTT	1.2.0
 https://doi.org/10.1093/aobpla/plab059	4	2021	Stinziano et al. (2021)	--	NA	R package	https://github.com/cdmuir/photosynthesis	exhaustive	2.1.2	alpha fixed to 0 in TPU; uses min-A+FRL for plotting
-https://doi.org/10.1111/pce.13995	3	2021	Xiao et al. (2021)	original FvCB	NA	Jupyter notebook	https://github.com/xiaoyizz78/FvCB-JAGS	original FvCB	1 (21 September 2019)
+https://doi.org/10.1111/pce.13995	3	2021	Xiao et al. (2021)	min-W	NA	Jupyter notebook	https://github.com/xiaoyizz78/FvCB-JAGS	min-W	1 (21 September 2019)
 --	--	2013	Tu (2013)	--	NA	Excel spreadsheet	https://landflux.org/	min-A	ACi_CurveFitting_10.1	"not published as a peer-reviewed paper, but used in several papers such as https://doi.org/10.1111/gcb.13599 (269 citations)"
+https://doi.org/10.1111/pce.15501	0	2025	Lochocki et al. (2025)	min-W	biochem	R package	https://github.com/eloch216/PhotoGEA	min-W	1.2.0

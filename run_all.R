@@ -1,15 +1,16 @@
 # Check to make sure we have the correct version of PhotoGEA
 library(PhotoGEA)
 
-if (packageVersion('PhotoGEA') != '1.2.0') {
-    stop(
-        'Scripts in the `FvCB-min-A` repository require PhotoGEA ',
-        'version 1.2.0. See the main README.md for installation instructions.'
-    )
-}
+# Check versions of key R packages
+print('running: check_versions.R')
+source('check_versions.R')
 
 # Make sure the output directories exist
 source(file.path('utilities', 'output_tools.R'))
+
+# Download the tobacco A-Ci curve data
+print('running: download_tobacco_data.R')
+source('download_tobacco_data.R')
 
 # Make barcharts used in Figure 1
 print('running: barcharts.R')

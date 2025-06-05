@@ -98,7 +98,7 @@ if (MAKE_NEW_CALCULATIONS){
   )
 
   # Define functions for extracting sequences of limiting factors
-  fvcb_limits <- function(
+  min_W_limits <- function(
       input_exdf,
       Vcmax,
       J,
@@ -108,7 +108,7 @@ if (MAKE_NEW_CALCULATIONS){
       Rd
   )
   {
-      full_res <- fvcb_model_exdf(
+      full_res <- min_W_exdf(
           input_exdf,
           Vcmax,
           J,
@@ -161,8 +161,8 @@ if (MAKE_NEW_CALCULATIONS){
   for (i in seq_along(v_seq)) {
     print(i / NPTS_VJ * 100)
     for (j in seq_along(j_seq)) {
-      z_cc_normal[i,j]     <- fvcb_limits(default_inputs,    v_seq[i], j_seq[j], defaults$Gstar,   defaults$Tp, defaults$alpha, defaults$Rd)
-      z_cc_supplement[i,j] <- fvcb_limits(supplement_inputs, v_seq[i], j_seq[j], supplement$Gstar, defaults$Tp, defaults$alpha, defaults$Rd)
+      z_cc_normal[i,j]     <- min_W_limits(default_inputs,    v_seq[i], j_seq[j], defaults$Gstar,   defaults$Tp, defaults$alpha, defaults$Rd)
+      z_cc_supplement[i,j] <- min_W_limits(supplement_inputs, v_seq[i], j_seq[j], supplement$Gstar, defaults$Tp, defaults$alpha, defaults$Rd)
       z_cc_min_A[i,j]      <- min_A_limits(default_inputs,   v_seq[i], j_seq[j], defaults$Gstar,   defaults$Tp, defaults$alpha, defaults$Rd, FALSE, -1)
       z_cc_min_A_FRL[i,j]  <- min_A_limits(default_inputs,   v_seq[i], j_seq[j], defaults$Gstar,   defaults$Tp, defaults$alpha, defaults$Rd, TRUE,  -1)
     }

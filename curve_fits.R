@@ -16,7 +16,7 @@ source(file.path('utilities', 'model_definitions.R'))
 source(file.path('utilities', 'output_tools.R'))
 
 # Load data
-load(file.path('data', 'tobacco_aci_raw_data.RData')) # load licor_data; created by `load_tobacco_data.R`
+load(file.path(OUTPUT_DIR, RDATA_DIR, 'tobacco_aci_raw_data.RData')) # load licor_data
 
 # Choose some settings
 SAVE_TO_PDF <- TRUE
@@ -109,7 +109,7 @@ if (MAKE_NEW_CALCULATIONS) {
     # Set a seed number because the deoptiom algorithm uses randomness
     set.seed(123)
 
-    # Fit the A-Ci curves (original FvCB, all Ci)
+    # Fit the A-Ci curves (min-W, all Ci)
     c3_aci_results <- consolidate(by(
         licor_data,                       # The `exdf` object containing the curves
         licor_data[, 'curve_identifier'], # A factor used to split `licor_data` into chunks
@@ -122,7 +122,7 @@ if (MAKE_NEW_CALCULATIONS) {
 
     print('done fitting set 1')
 
-    # Fit the A-Ci curves (original FvCB, Ci above threshold)
+    # Fit the A-Ci curves (min-W, Ci above threshold)
     c3_aci_results_no_low <- consolidate(by(
         licor_data_subset,                       # The `exdf` object containing the curves
         licor_data_subset[, 'curve_identifier'], # A factor used to split `licor_data` into chunks
@@ -135,7 +135,7 @@ if (MAKE_NEW_CALCULATIONS) {
 
     print('done fitting set 2')
 
-    # Fit the A-Ci curves (min-A variant, all Ci)
+    # Fit the A-Ci curves (min-A, all Ci)
     c3_aci_results_min_A <- consolidate(by(
         licor_data,                       # The `exdf` object containing the curves
         licor_data[, 'curve_identifier'], # A factor used to split `licor_data` into chunks
@@ -150,7 +150,7 @@ if (MAKE_NEW_CALCULATIONS) {
 
     print('done fitting set 3')
 
-    # Fit the A-Ci curves (min-A variant, Ci above threshold)
+    # Fit the A-Ci curves (min-A, Ci above threshold)
     c3_aci_results_no_low_min_A <- consolidate(by(
         licor_data_subset,                       # The `exdf` object containing the curves
         licor_data_subset[, 'curve_identifier'], # A factor used to split `licor_data` into chunks
@@ -347,22 +347,22 @@ pdf_print(
 
 # Plot RMSE and parameter comparisons for each curve
 plot_diff <- function(pname, xlim, ylim_rel, ylim_abs, ylim_ci, ordering = NULL, x_curve = FALSE, alternating = 0) {
-    val_no_low     <- c3_aci_results_no_low$parameters[, pname]
-    val_fvcb_all   <- c3_aci_results$parameters[, pname]
+    val_no_low    <- c3_aci_results_no_low$parameters[, pname]
+    val_min_W_all <- c3_aci_results$parameters[, pname]
     val_min_A_all <- c3_aci_results_min_A$parameters[, pname]
 
-    abs_diff_fvcb   <- val_fvcb_all - val_no_low
+    abs_diff_min_W <- val_min_W_all - val_no_low
     abs_diff_min_A <- val_min_A_all - val_no_low
 
-    rel_diff_fvcb   <- 100 * abs_diff_fvcb / val_no_low
+    rel_diff_min_W <- 100 * abs_diff_min_W / val_no_low
     rel_diff_min_A <- 100 * abs_diff_min_A / val_no_low
 
     dataf <- data.frame(
         curve_identifier = c3_aci_results$parameters[, 'curve_identifier'],
-        abs_diff_fvcb = abs_diff_fvcb,
+        abs_diff_min_W = abs_diff_min_W,
         abs_diff_min_A = abs_diff_min_A,
         fit_type = c3_aci_results$parameters[, 'fit_type'],
-        rel_diff_fvcb = rel_diff_fvcb,
+        rel_diff_min_W = rel_diff_min_W,
         rel_diff_min_A = rel_diff_min_A,
         val_no_low = val_no_low
     )
@@ -373,28 +373,28 @@ plot_diff <- function(pname, xlim, ylim_rel, ylim_abs, ylim_ci, ordering = NULL,
 
         upper_no_low <- c3_aci_results_no_low$parameters[, pname_upper]
         lower_no_low <- c3_aci_results_no_low$parameters[, pname_lower]
-        upper_fvcb   <- c3_aci_results$parameters[, pname_upper]
-        lower_fvcb   <- c3_aci_results$parameters[, pname_lower]
-        upper_min_A <- c3_aci_results_min_A$parameters[, pname_upper]
-        lower_min_A <- c3_aci_results_min_A$parameters[, pname_lower]
+        upper_min_W  <- c3_aci_results$parameters[, pname_upper]
+        lower_min_W  <- c3_aci_results$parameters[, pname_lower]
+        upper_min_A  <- c3_aci_results_min_A$parameters[, pname_upper]
+        lower_min_A  <- c3_aci_results_min_A$parameters[, pname_lower]
 
         ci_width_no_low <- upper_no_low - lower_no_low
-        ci_width_fvcb   <- upper_fvcb - lower_fvcb
-        ci_width_min_A <- upper_min_A - lower_min_A
+        ci_width_min_W  <- upper_min_W - lower_min_W
+        ci_width_min_A  <- upper_min_A - lower_min_A
 
         ci_width_no_low[is.infinite(ci_width_no_low)] <- NA
-        ci_width_fvcb[is.infinite(ci_width_fvcb)]     <- NA
+        ci_width_min_W[is.infinite(ci_width_min_W)]     <- NA
         ci_width_min_A[is.infinite(ci_width_min_A)] <- NA
 
         dataf <- cbind(dataf, data.frame(
             ci_width_no_low = ci_width_no_low,
-            ci_width_fvcb = ci_width_fvcb,
+            ci_width_min_W = ci_width_min_W,
             ci_width_min_A = ci_width_min_A
         ))
     }
 
     ordering <- if (is.null(ordering)) {
-        order(dataf$fit_type, dataf$abs_diff_fvcb)
+        order(dataf$fit_type, dataf$abs_diff_min_W)
     } else {
         ordering
     }
@@ -404,11 +404,11 @@ plot_diff <- function(pname, xlim, ylim_rel, ylim_abs, ylim_ci, ordering = NULL,
     if (x_curve) {
         pdf_print(
             xyplot(
-                val_fvcb_all + val_min_A_all + val_no_low ~ seq_along(val_no_low) | fit_type,
+                val_min_W_all + val_min_A_all + val_no_low ~ seq_along(val_no_low) | fit_type,
                 data = dataf,
                 scales = list(alternating = alternating),
                 type = 'p',
-                auto.key = list(text = c('original FvCB', 'min-A variant', 'Ci above threshold'), space = 'top'),
+                auto.key = list(text = c('min-W', 'min-A', 'Ci above threshold'), space = 'top'),
                 par.settings = list(superpose.symbol = list(pch = c(16, 1))),
                 grid = TRUE,
                 xlim = c(0, length(val_no_low) + 1),
@@ -425,14 +425,14 @@ plot_diff <- function(pname, xlim, ylim_rel, ylim_abs, ylim_ci, ordering = NULL,
     pdf_print(
         xyplot(
             if (x_curve) {
-                rel_diff_fvcb + rel_diff_min_A ~ seq_along(val_no_low) | fit_type
+                rel_diff_min_W + rel_diff_min_A ~ seq_along(val_no_low) | fit_type
             } else {
-                rel_diff_fvcb + rel_diff_min_A ~ val_no_low
+                rel_diff_min_W + rel_diff_min_A ~ val_no_low
             },
             data = dataf,
             scales = list(alternating = alternating),
             type = 'p',
-            auto.key = list(text = c('original FvCB', 'min-A variant'), space = 'top'),
+            auto.key = list(text = c('min-W', 'min-A'), space = 'top'),
             par.settings = list(superpose.symbol = list(pch = c(16, 1))),
             grid = !x_curve,
             xlim = if (x_curve) {
@@ -449,9 +449,9 @@ plot_diff <- function(pname, xlim, ylim_rel, ylim_abs, ylim_ci, ordering = NULL,
             ylab = paste('Relative change in', pname, 'when including all Ci'),
             panel = function(...) {
                 if (x_curve) {
-                    for (i in seq_along(rel_diff_fvcb)) {
+                    for (i in seq_along(rel_diff_min_W)) {
                         panel.lines(
-                            c(dataf$rel_diff_fvcb[i], dataf$rel_diff_min_A[i]) ~ c(i, i),
+                            c(dataf$rel_diff_min_W[i], dataf$rel_diff_min_A[i]) ~ c(i, i),
                             col = 'gray30'
                         )
                     }
@@ -472,14 +472,14 @@ plot_diff <- function(pname, xlim, ylim_rel, ylim_abs, ylim_ci, ordering = NULL,
     pdf_print(
         xyplot(
             if (x_curve) {
-                abs_diff_fvcb + abs_diff_min_A ~ seq_along(val_no_low) | fit_type
+                abs_diff_min_W + abs_diff_min_A ~ seq_along(val_no_low) | fit_type
             } else {
-                abs_diff_fvcb + abs_diff_min_A ~ val_no_low
+                abs_diff_min_W + abs_diff_min_A ~ val_no_low
             },
             data = dataf,
             scales = list(alternating = alternating),
             type = 'p',
-            auto.key = list(text = c('original FvCB', 'min-A variant'), space = 'top'),
+            auto.key = list(text = c('min-W', 'min-A'), space = 'top'),
             par.settings = list(superpose.symbol = list(pch = c(16, 1))),
             grid = !x_curve,
             xlim = if (x_curve) {
@@ -496,9 +496,9 @@ plot_diff <- function(pname, xlim, ylim_rel, ylim_abs, ylim_ci, ordering = NULL,
             ylab = paste('Change in', pname, 'when including all Ci'),
             panel = function(...) {
                 if (x_curve) {
-                    for (i in seq_along(rel_diff_fvcb)) {
+                    for (i in seq_along(rel_diff_min_W)) {
                         panel.lines(
-                            c(dataf$abs_diff_fvcb[i], dataf$abs_diff_min_A[i]) ~ c(i, i),
+                            c(dataf$abs_diff_min_W[i], dataf$abs_diff_min_A[i]) ~ c(i, i),
                             col = 'gray30'
                         )
                     }
@@ -519,7 +519,7 @@ plot_diff <- function(pname, xlim, ylim_rel, ylim_abs, ylim_ci, ordering = NULL,
     if (x_curve && pname != 'RMSE') {
         pdf_print(
             xyplot(
-                ci_width_fvcb + ci_width_min_A + ci_width_no_low ~ seq_along(val_no_low) | fit_type,
+                ci_width_min_W + ci_width_min_A + ci_width_no_low ~ seq_along(val_no_low) | fit_type,
                 data = dataf,
                 scales = list(alternating = alternating),
                 type = 'p',
@@ -530,9 +530,9 @@ plot_diff <- function(pname, xlim, ylim_rel, ylim_abs, ylim_ci, ordering = NULL,
                 xlab = 'Curve',
                 ylab = paste(pname, 'confidence interval width'),
                 panel = function(...) {
-                    for (i in seq_along(rel_diff_fvcb)) {
+                    for (i in seq_along(rel_diff_min_W)) {
                         ci_widths <- c(
-                          dataf$ci_width_fvcb[i],
+                          dataf$ci_width_min_W[i],
                           dataf$ci_width_min_A[i],
                           dataf$ci_width_no_low[i]
                         )
@@ -618,33 +618,33 @@ colnames(fit_result_summary) <- c(
     'Curve identifier',
     'Curve type',
 
-    'RMSE (original FvCB, all Ci)',
-    'Vcmax_at_25 (original FvCB, all Ci)',
-    'J_at_25 (original FvCB, all Ci)',
-    'Tp_at_25 (original FvCB, all Ci)',
-    'alpha_old (original FvCB, all Ci)',
-    'RL_at_25 (original FvCB, all Ci)',
+    'RMSE (min-W, all Ci)',
+    'Vcmax_at_25 (min-W, all Ci)',
+    'J_at_25 (min-W, all Ci)',
+    'Tp_at_25 (min-W, all Ci)',
+    'alpha_old (min-W, all Ci)',
+    'RL_at_25 (min-W, all Ci)',
 
-    'RMSE (original FvCB, Ci above threshold)',
-    'Vcmax_at_25 (original FvCB, Ci above threshold)',
-    'J_at_25 (original FvCB, Ci above threshold)',
-    'Tp_at_25 (original FvCB, Ci above threshold)',
-    'alpha_old (original FvCB, Ci above threshold)',
-    'RL_at_25 (original FvCB, Ci above threshold)',
+    'RMSE (min-W, Ci above threshold)',
+    'Vcmax_at_25 (min-W, Ci above threshold)',
+    'J_at_25 (min-W, Ci above threshold)',
+    'Tp_at_25 (min-W, Ci above threshold)',
+    'alpha_old (min-W, Ci above threshold)',
+    'RL_at_25 (min-W, Ci above threshold)',
 
-    'RMSE (min-A variant, all Ci)',
-    'Vcmax_at_25 (min-A variant, all Ci)',
-    'J_at_25 (min-A variant, all Ci)',
-    'Tp_at_25 (min-A variant, all Ci)',
-    'alpha_old (min-A variant, all Ci)',
-    'RL_at_25 (min-A variant, all Ci)',
+    'RMSE (min-A, all Ci)',
+    'Vcmax_at_25 (min-A, all Ci)',
+    'J_at_25 (min-A, all Ci)',
+    'Tp_at_25 (min-A, all Ci)',
+    'alpha_old (min-A, all Ci)',
+    'RL_at_25 (min-A, all Ci)',
 
-    'RMSE (min-A variant, Ci above threshold)',
-    'Vcmax_at_25 (min-A variant, Ci above threshold)',
-    'J_at_25 (min-A variant, Ci above threshold)',
-    'Tp_at_25 (min-A variant, Ci above threshold)',
-    'alpha_old (min-A variant, Ci above threshold)',
-    'RL_at_25 (min-A variant, Ci above threshold)'
+    'RMSE (min-A, Ci above threshold)',
+    'Vcmax_at_25 (min-A, Ci above threshold)',
+    'J_at_25 (min-A, Ci above threshold)',
+    'Tp_at_25 (min-A, Ci above threshold)',
+    'alpha_old (min-A, Ci above threshold)',
+    'RL_at_25 (min-A, Ci above threshold)'
 )
 
 fit_result_summary <- fit_result_summary[ord, ]
@@ -663,8 +663,8 @@ print(mean(c3_aci_results_no_low_min_A$parameters[, 'RMSE']))
 
 # Plot RMSE histograms
 rmse_df <- rbind(
-    within(c3_aci_results$parameters$main_data,              {fit_type = 'Original FvCB (all Ci)'}),
-    within(c3_aci_results_no_low$parameters$main_data,       {fit_type = 'Original FvCB (Ci above threshold)'}),
+    within(c3_aci_results$parameters$main_data,              {fit_type = 'min-W (all Ci)'}),
+    within(c3_aci_results_no_low$parameters$main_data,       {fit_type = 'min-W (Ci above threshold)'}),
     within(c3_aci_results_min_A$parameters$main_data,        {fit_type = 'Min-A+FTT (all Ci)'}),
     within(c3_aci_results_no_low_min_A$parameters$main_data, {fit_type = 'Min-A+FTT (Ci above threshold)'})
 )

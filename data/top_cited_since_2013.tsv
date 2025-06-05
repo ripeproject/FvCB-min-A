@@ -1,7 +1,7 @@
 doi_link	times_cited	year	citation	equations_paper	tpu_c_lim	comments
-https://doi.org/10.1007/s11120-013-9874-6	570	2014	Yamori et al. (2014)	original FvCB	NA	Equation 3 in Supplementary Material 1
+https://doi.org/10.1007/s11120-013-9874-6	570	2014	Yamori et al. (2014)	min-W	NA	Equation 3 in Supplementary Material 1
 https://doi.org/10.1111/j.1365-2486.2012.02797.x	306	2012	Smith & Dukes (2012)	min-A	NA	Equation 1
-https://doi.org/10.1002/ece3.1173	256	2014	Walker et al. (2014)	original FvCB	NA	Equation 2
+https://doi.org/10.1002/ece3.1173	256	2014	Walker et al. (2014)	min-W	NA	Equation 2
 https://doi.org/10.1371/journal.pone.0143346	248	2015	Duursma (2015)	min-A	NA	Equation 1
 https://doi.org/10.5194/gmd-7-2193-2014	217	2014	Bonan et al. (2014)	min-A	NA	Equation A10
 https://doi.org/10.1002/2014GL060457	156	2014	Franks et al. (2014)	min-A	NA	"Briefly, in the Farquhar-von Caemmerer-Berry biochemical model for photosynthesis... An = min [We, Wc] where We is the light-limited rate and Wc is the Rubisco capacity-limited rate."

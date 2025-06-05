@@ -99,19 +99,19 @@ tpu_c_lim_info <- tpu_c_lim_info[tpu_c_lim_info$citation != 'Tu (2013)', ]
 # Set column order for plotting
 paper_count_fractions$model <- factor(
   paper_count_fractions$model,
-  levels = c('original FvCB', 'other', 'min-A')
+  levels = c('min-W', 'other', 'min-A')
 )
 
 citation_count_fractions$model <- factor(
   citation_count_fractions$model,
-  levels = c('original FvCB', 'other', 'min-A')
+  levels = c('min-W', 'other', 'min-A')
 )
 
 tool_count_totals$model <- factor(
   tool_count_totals$model,
   levels = c(
-    'original FvCB',
-    'original FvCB+FTT',
+    'min-W',
+    'min-W+FTT',
     'manual',
     'exhaustive',
     'min-A',

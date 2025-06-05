@@ -17,8 +17,8 @@ FIT_OPTIONS <- list(
   Tp_at_25 = FIXED_TP
 )
 
-# Returns a function that calculates error values using the original FvCB
-fvcb_error <- function(
+# Returns a function that calculates error values using the min-W variant
+min_W_error <- function(
   C_seq,  # microbar
   An_seq, # micromol / m^2 / s
   Kc,     # microbar
@@ -100,7 +100,7 @@ min_A_error <- function(
   )
 }
 
-# Fits an A-C curve using the FvCB and psudeo-original FvCBs
+# Fits an A-C curve using the min-W and min-A variants
 fit_model <- function(
   C_seq,          # microbar (a vector to be fitted)
   An_seq,         # microbar (a vector to be fitted)
@@ -129,8 +129,8 @@ fit_model <- function(
     value = An_seq
   )
 
-  # Fit the curve using the original FvCB
-  fvcb_fit <- fit_c3_aci(
+  # Fit the curve using the min-W variant
+  min_W_fit <- fit_c3_aci(
     inputs,
     atp_use = Wj_C_coef,
     nadph_use = Wj_G_coef,
@@ -153,17 +153,17 @@ fit_model <- function(
 
   # Return important results
   list(
-    fvcb_fit = list(
-      success = fvcb_fit$parameters[1, 'convergence'],
-      feval = fvcb_fit$parameters[1, 'feval'],
-      value = fvcb_fit$parameters[1, 'optimum_val'],
-      J = fvcb_fit$parameters[1, 'J_at_25'],
-      J_lower = fvcb_fit$parameters[1, 'J_at_25_lower'],
-      J_upper = fvcb_fit$parameters[1, 'J_at_25_upper'],
-      Vcmax = fvcb_fit$parameters[1, 'Vcmax_at_25'],
-      Vcmax_lower = fvcb_fit$parameters[1, 'Vcmax_at_25_lower'],
-      Vcmax_upper = fvcb_fit$parameters[1, 'Vcmax_at_25_upper'],
-      RMSE = fvcb_fit$parameters[1, 'RMSE']
+    min_W_fit = list(
+      success = min_W_fit$parameters[1, 'convergence'],
+      feval = min_W_fit$parameters[1, 'feval'],
+      value = min_W_fit$parameters[1, 'optimum_val'],
+      J = min_W_fit$parameters[1, 'J_at_25'],
+      J_lower = min_W_fit$parameters[1, 'J_at_25_lower'],
+      J_upper = min_W_fit$parameters[1, 'J_at_25_upper'],
+      Vcmax = min_W_fit$parameters[1, 'Vcmax_at_25'],
+      Vcmax_lower = min_W_fit$parameters[1, 'Vcmax_at_25_lower'],
+      Vcmax_upper = min_W_fit$parameters[1, 'Vcmax_at_25_upper'],
+      RMSE = min_W_fit$parameters[1, 'RMSE']
     ),
     min_A_fit = list(
       success = min_A_fit$parameters[1, 'convergence'],
@@ -194,7 +194,7 @@ fit_and_plot <- function(
   make_plots      # boolean
 )
 {
-  # Fit the A-Ci curve with both models
+  # Fit the A-Ci curve with both variants
   fitres <- fit_model(
     C_seq,
     An_seq,
@@ -205,13 +205,13 @@ fit_and_plot <- function(
   )
 
   # Calculate fitted An values
-  an_seq_fvcb_fit <- fvcb_model(
+  an_seq_min_W_fit <- min_W(
     C_seq,
-    fitres$fvcb_fit$Vcmax,
+    fitres$min_W_fit$Vcmax,
     Kc,
     O,
     Ko,
-    fitres$fvcb_fit$J,
+    fitres$min_W_fit$J,
     FIXED_GSTAR,
     FIXED_TP,
     FIXED_ALPHA,
@@ -239,7 +239,7 @@ fit_and_plot <- function(
 
   # Specify line plots
   low_j_p1 <- xyplot(
-    An_seq + an_seq_fvcb_fit$An + an_seq_min_A_fit$An ~ C_seq,
+    An_seq + an_seq_min_W_fit$An + an_seq_min_A_fit$An ~ C_seq,
     type = 'b',
     grid = TRUE,
     auto.key = list(lines = TRUE, points = TRUE),
@@ -255,7 +255,7 @@ fit_and_plot <- function(
   )
 
   low_j_p2 <- xyplot(
-    An_seq + an_seq_fvcb_fit$An + an_seq_fvcb_fit$Wc + an_seq_fvcb_fit$Wj ~ C_seq,
+    An_seq + an_seq_min_W_fit$An + an_seq_min_W_fit$Wc + an_seq_min_W_fit$Wj ~ C_seq,
     type = 'b',
     pch = 16,
     grid = TRUE,

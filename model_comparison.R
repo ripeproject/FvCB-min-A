@@ -34,7 +34,7 @@ fvcb_compare <- function(
   TPU_threshold = -1
 )
 {
-  fvcb_model_res <- fvcb_model(
+  min_W_res <- min_W(
     C_seq,
     Vcmax,
     Kc,
@@ -65,7 +65,7 @@ fvcb_compare <- function(
   if (plot_type == 1) {
     xyplot(
       An + Vc + Wc + Wj + Wp ~ C_seq,
-      data = fvcb_model_res,
+      data = min_W_res,
       type = 'l',
       lty = c(1, 1, 2, 2, 2),
       lwd = c(3, 3, 2, 2, 2),
@@ -82,7 +82,7 @@ fvcb_compare <- function(
       ),
       xlab = 'C (microbar)',
       ylab = 'Rates (micromol / m^2 / s)',
-      main = 'Original FvCB'
+      main = 'min-W'
     )
   } else if (plot_type == 2) {
     xyplot(
@@ -104,11 +104,11 @@ fvcb_compare <- function(
       ),
       xlab = 'C (microbar)',
       ylab = 'Rates (micromol / m^2 / s)',
-      main = 'min-A variant'
+      main = 'min-A'
     )
   } else if (plot_type == 3) {
     xyplot(
-      fvcb_model_res$An + min_A_res$An ~ C_seq,
+      min_W_res$An + min_A_res$An ~ C_seq,
       type = 'l',
       lty = c(1, 2),
       lwd = c(3, 2),
@@ -121,9 +121,9 @@ fvcb_compare <- function(
       ylim = alim,
       xlab = 'C (microbar)',
       ylab = 'An (micromol / m^2 / s)',
-      main = 'Original FvCB vs. min-A variants',
+      main = 'min-W vs. min-A',
       auto.key = list(
-        text = c('original FvCB', 'min-A variant'),
+        text = c('min-W', 'min-A'),
         lines = TRUE,
         points = FALSE
       )

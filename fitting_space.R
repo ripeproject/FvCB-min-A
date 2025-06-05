@@ -23,7 +23,7 @@ NPTS <- 501
 c_seq <- c(5, 10, 20, 30, 50, 70, 90, 110, 130, 175, 200, 300, 500) # microbar
 
 # Simulate An values using a low J
-an_seq <- fvcb_model(
+an_seq <- min_W(
   c_seq,
   defaults$Vcmax,
   defaults$Kc,
@@ -79,14 +79,14 @@ jlab <- 'J [ micromol / m^2 / s ]'
 vcmaxlab <- 'Vcmax [micromol / m^2 / s]'
 
 plot_error_space_image(make_colormap_image(), 'error_colormap')
-plot_error_space_image(error_res$fvcb_image,  'simulated_aci_curve fvcb_error',                           xlab = vcmaxlab, ylab = jlab)
+plot_error_space_image(error_res$min_W_image, 'simulated_aci_curve min_W_error',                          xlab = vcmaxlab, ylab = jlab)
 plot_error_space_image(error_res$min_A_image, 'simulated_aci_curve min_A_error',                          xlab = vcmaxlab, ylab = jlab)
-plot_error_space_image(error_res$fvcb_image,  'simulated_aci_curve fvcb_error_contour',  boundary = TRUE, xlab = vcmaxlab, ylab = jlab)
+plot_error_space_image(error_res$min_W_image, 'simulated_aci_curve min_W_error_contour', boundary = TRUE, xlab = vcmaxlab, ylab = jlab)
 plot_error_space_image(error_res$min_A_image, 'simulated_aci_curve min_A_error_contour', boundary = TRUE, xlab = vcmaxlab, ylab = jlab)
 
 # Extract and reorganize the fitting results
 fit_res <- rbind(
-  within(as.data.frame(res$fvcb_fit),  {type = 'original FvCB'}),
+  within(as.data.frame(res$min_W_fit), {type = 'min-W'}),
   within(as.data.frame(res$min_A_fit), {type = 'min_A'})
 )
 

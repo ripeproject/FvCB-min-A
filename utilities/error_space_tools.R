@@ -20,17 +20,17 @@ explore_error_space <- function(
 )
 {
   # Get ready to explore error space
-  z_fvcb <- matrix(nrow = length(v_seq), ncol = length(j_seq))
-  z_min_A <- z_fvcb
+  z_min_W <- matrix(nrow = length(v_seq), ncol = length(j_seq))
+  z_min_A <- z_min_W
 
   # Create error functions.
-  fvcb_error_func <- fvcb_error(
+  min_W_error_func <- min_W_error(
     pcc_values, # microbar
     an_values,  # micromol / m^2 / s
     Kc,         # microbar
     O,          # mbar
     Ko,         # mbar
-    fitres$fvcb_fit$RMSE # micromol / m^2 / s
+    fitres$min_W_fit$RMSE # micromol / m^2 / s
   )
 
   min_A_error_func <- min_A_error(
@@ -48,22 +48,22 @@ explore_error_space <- function(
     for (j in seq_along(j_seq)) {
       param <- c(j_seq[j], v_seq[i])
 
-      z_fvcb[i,j]  <- exp(-fvcb_error_func(param))
+      z_min_W[i,j]  <- exp(-min_W_error_func(param))
       z_min_A[i,j] <- exp(-min_A_error_func(param))
     }
   }
 
   # Get relative likelihood values
-  z_fvcb  <- z_fvcb / exp(-fitres$fvcb_fit$value)
+  z_min_W  <- z_min_W / exp(-fitres$min_W_fit$value)
   z_min_A <- z_min_A / exp(-fitres$min_A_fit$value)
 
   # Make the images
-  fvcb_image  <- list(x = v_seq, y = j_seq, z = z_fvcb)
+  min_W_image  <- list(x = v_seq, y = j_seq, z = z_min_W)
   min_A_image <- list(x = v_seq, y = j_seq, z = z_min_A)
 
   # Return the images in a list
   list(
-    fvcb_image = fvcb_image,
+    min_W_image = min_W_image,
     min_A_image = min_A_image
   )
 }

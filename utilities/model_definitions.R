@@ -84,8 +84,8 @@ input_exdf <- function(
   )
 }
 
-# Use PhotoGEA to run the original FvCB
-fvcb_model_exdf <- function(
+# Use PhotoGEA to run the min-W variant
+min_W_exdf <- function(
   inputs,
   Vcmax, # micromol / m^2 / s
   J,     # micromol / m^2 / s
@@ -130,7 +130,8 @@ fvcb_model_exdf <- function(
   )
 }
 
-fvcb_model <- function(
+# A convenient wrapper for min_W_exdf
+min_W <- function(
   C,     # microbar
   Vcmax, # micromol / m^2 / s
   Kc,    # microbar
@@ -153,7 +154,7 @@ fvcb_model <- function(
   )
 
   # Calculate assimilation rates
-  fvcb_model_exdf(
+  min_W_exdf(
     inputs,
     Vcmax, # micromol / m^2 / s
     J,     # micromol / m^2 / s
@@ -214,6 +215,7 @@ min_A_exdf <- function(
   )
 }
 
+# A convenient wrapper for min_A_exdf
 min_A <- function(
   C,            # microbar
   Vcmax,        # micromol / m^2 / s
