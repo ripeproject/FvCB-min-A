@@ -8,8 +8,11 @@ These scripts have been tested using the following installations:
   - R version 4.3.2 (2023-10-31 ucrt)
   - Windows 10 Enterprise version 22H2
 - Windows:
-  - R version 4.42 (2024-10-30 ucrt)
+  - R version 4.4.2 (2024-10-30 ucrt)
   - Windows 11 Enterprise version 10.0.26100
+- Linux:
+  - R version 4.3.3 (2024-02-29)
+  - Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-49-generic x86_64)
 
 All outputs were generated using these scripts and stored in the
 `output_archive` directory.
