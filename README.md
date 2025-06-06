@@ -1,7 +1,8 @@
 ## FvCB-min-A
 This repository includes R scripts and input data that were used to produce
 the figures of the manuscript titled "Widely Used Variants of the
-Farquhar-von-Caemmerer-Berry Model Can Cause Errors in Parameter Estimation."
+Farquhar-von-Caemmerer-Berry Model Can Cause Errors in Parameter Estimation,"
+currently available on [bioRxiv](https://doi.org/10.1101/2025.03.11.642611).
 
 These scripts have been tested using the following installations:
 - Windows:
